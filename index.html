@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Syracuse Alumni Email Draft Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <h1 class="page-title">Email Assistant</h1>
+      <p class="page-subtitle">
+        AI-powered email assistant for the Office of Alumni &amp; Constituent
+        Engagement at Syracuse University
+      </p>
+      <div class="theme-toggle" role="group" aria-label="Theme mode">
+        <div id="theme-switch" class="theme-switch" style="--theme-index: 0">
+          <div class="theme-switch__thumb" aria-hidden="true"></div>
+
+          <label class="theme-switch__option" data-theme-value="light" title="Light">
+            <input type="radio" name="theme" value="light" checked />
+            <svg
+              class="theme-switch__icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <path
+                d="M12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12Zm0-16a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0V3a1 1 0 0 1 1-1Zm0 18a1 1 0 0 1 1 1v1a1 1 0 1 1-2 0v-1a1 1 0 0 1 1-1Zm10-8a1 1 0 0 1-1 1h-1a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1ZM4 12a1 1 0 0 1-1 1H2a1 1 0 1 1 0-2h1a1 1 0 0 1 1 1Zm15.07-7.07a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0ZM7.05 17.95a1 1 0 0 1 0 1.41l-.71.71a1 1 0 1 1-1.41-1.41l.71-.71a1 1 0 0 1 1.41 0Zm11.31 3.12a1 1 0 0 1-1.41 0l-.71-.71a1 1 0 0 1 1.41-1.41l.71.71a1 1 0 0 1 0 1.41ZM6.34 6.34A1 1 0 0 1 4.93 6.34l-.71-.71A1 1 0 1 1 5.63 4.22l.71.71Z"
+              />
+            </svg>
+            <span class="sr-only">Light</span>
+          </label>
+
+          <label class="theme-switch__option" data-theme-value="dark" title="Dark">
+            <input type="radio" name="theme" value="dark" />
+            <svg
+              class="theme-switch__icon"
+              aria-hidden="true"
+              viewBox="0 0 24 24"
+              focusable="false"
+            >
+              <path
+                d="M21 14.23A8.1 8.1 0 0 1 9.77 3a1 1 0 0 0-1.17 1.17A10 10 0 1 0 19.83 15.4a1 1 0 0 0 1.17-1.17ZM12 20a8 8 0 0 1-6.6-12.53A10.1 10.1 0 0 0 16.53 18.6 7.9 7.9 0 0 1 12 20Z"
+              />
+            </svg>
+            <span class="sr-only">Dark</span>
+          </label>
+
+          <label class="theme-switch__option" data-theme-value="otto" title="Otto">
+            <input type="radio" name="theme" value="otto" />
+            <svg
+              class="theme-switch__icon theme-switch__icon--otto"
+              aria-hidden="true"
+              viewBox="0 0 462.34 463.65"
+              focusable="false"
+            >
+              <path
+                d="M335.13,33.47c3.69-.22,11.07-.37,14.52,1.48,42.55,22.86,123.76,88.51,39,120.36-18.04,6.78-40.15,16.29-58.55,24.42-14.98,5.98-49.14,24.46-62.45,21.1-21.38-5.4,2.49-48.6,6.86-59.13,10.97-26.5,22.15-52.91,33.53-79.23,7.57-17.08,9.87-22.37,27.09-29Z"
+              />
+              <path
+                d="M222.6,276.53c5.52.1,10.39-.02,14.78,3.72,9.71,8.26,51.37,116.21,57.45,134.73,1.95,5.93,3.3,11.87,3.82,18.1.47,5.68-2.88,10.25-6.5,14.33-13.99,15.79-38.09,14.87-57.41,15.89-20.94,1.27-79.14.68-72.93-31.07,5.62-28.73,44.82-137.89,60.79-155.71Z"
+              />
+              <path
+                d="M419.32,164.76c28.45-2.04,39.18,14.09,41.52,40.49,10.5,118.25-35.1,94.16-115.77,64.38-16.01-7.4-40.64-12.84-55.08-21.22-47.19-27.42,36.3-48.78,54.27-56,23.59-9.47,51.93-21.49,75.05-27.64Z"
+              />
+              <path
+                d="M263.82,260.43c.26-.03.52-.06.78-.08,19.2-1.77,129.52,44.81,146.2,58.77,6.12,5.13,13.11,12.64,13.66,21.01,1.32,19.97-21.34,42.32-33.87,56.2-12.42,12.04-26.75,28.96-45.25,29.85-6.06.29-14.43-.88-19.01-5.2-4.73-4.45-8.62-10.29-11.78-15.94-9.69-17.35-58.02-117.65-57.95-131.1.03-6.09,3.08-9.4,7.21-13.5Z"
+              />
+              <path
+                d="M212.5,1.39c26.28-1.78,83.86-7.53,85.26,30.26.45,12.19-5.42,25.52-10.25,36.6-15.49,35.51-29.1,72.16-45.4,107.27-12.32,17.88-25.7,1.92-30.95-11.89-14.05-36.91-29.71-73.29-43.74-110.21C152.93,15.31,179.04,3.48,212.5,1.39Z"
+              />
+              <path
+                d="M116.78,39.51c18.44-.68,22.39,5.03,30.04,20.71,11.48,24.54,22.98,46.88,34.15,71.83,5.37,12.01,25.06,47.99,22.04,60.03-3.76,15.05-24.37,10.29-34.53,5.47-6.05-2.87-16.42-6.44-23.89-9.45-27.52-10.44-61.55-22.4-87.61-35.15-52.76-25.81,29.89-106.54,59.8-113.45Z"
+              />
+              <path
+                d="M184.57,258.95c5.02.14,9.52,1.12,13.38,4.59,2.68,2.41,3.98,5.4,4.09,8.99.39,13.13-56.48,134.03-67.02,145.44-4.84,5.23-14.31,9.45-21.43,9.62-13.77.32-25.57-12.71-34.73-21.36-20.81-20.47-67.83-66-23.97-89.89,40.88-22.27,87.01-37.94,129.68-57.39Z"
+              />
+              <path
+                d="M24.73,167.7c22.56-2.06,96.91,28.42,123.4,37.99,76.45,27.63,9.47,48.23-21.78,60.71C39.98,302.64-14.84,330.2,3.55,201.63c2.25-15.73,7.26-26.11,21.18-33.93Z"
+              />
+            </svg>
+            <span class="sr-only">Otto</span>
+          </label>
+        </div>
+
+        <div id="theme-switch-text" class="theme-switch__text" aria-live="polite">
+          Light
+        </div>
+      </div>
+
+      <main>
+        <section id="step-form" class="card">
+          <h2>Step 1: Campaign Details</h2>
+          <form id="campaign-form">
+            <div class="field">
+              <label for="campaign-name">
+                Campaign name <span class="required">*</span>
+              </label>
+              <div class="input-with-counter">
+                <input
+                  id="campaign-name"
+                  name="campaignName"
+                  type="text"
+                  maxlength="50"
+                  required
+                  placeholder="Homecoming Weekend 2026"
+                />
+                <span id="campaign-counter" class="counter">0/50</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="audience">
+                Audience <span class="required">*</span>
+              </label>
+              <input
+                id="audience"
+                name="audience"
+                type="text"
+                required
+                placeholder="Recent graduates from the Class of 2024"
+              />
+            </div>
+
+            <div class="field">
+              <label for="email-length">
+                Email length <span class="required">*</span>
+              </label>
+              <select id="email-length" name="emailLength" required>
+                <option value="" disabled selected>Select a length</option>
+                <option value="short">Short (100-150 words)</option>
+                <option value="medium">Medium (200-300 words)</option>
+                <option value="long">Long (400+ words)</option>
+              </select>
+            </div>
+
+            <fieldset class="field tone-field">
+              <legend>Tone (optional)</legend>
+              <div class="slider-group">
+                <label for="tone-formal">Formal &larr;&rarr; Casual</label>
+                <input
+                  id="tone-formal"
+                  name="toneFormal"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                />
+              </div>
+              <div class="slider-group">
+                <label for="tone-serious">Serious &larr;&rarr; Playful</label>
+                <input
+                  id="tone-serious"
+                  name="toneSerious"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                />
+              </div>
+              <div class="slider-group">
+                <label for="tone-enthusiastic">
+                  Reserved &larr;&rarr; Enthusiastic
+                </label>
+                <input
+                  id="tone-enthusiastic"
+                  name="toneEnthusiastic"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="50"
+                />
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="context">Additional context</label>
+              <textarea
+                id="context"
+                name="context"
+                rows="5"
+                placeholder="Key details, dates, CTAs, or other information to include"
+              ></textarea>
+            </div>
+
+            <button id="generate-btn" type="submit" disabled>
+              Generate Draft
+            </button>
+          </form>
+        </section>
+
+        <section id="step-results" class="card hidden" aria-live="polite">
+          <div class="results-header">
+            <h2>Step 2: Draft Results</h2>
+            <button id="start-over-btn" class="secondary-btn">Start Over</button>
+          </div>
+          <div id="start-over-warning" class="inline-warning hidden">
+            <span>Start over? Your draft will be lost.</span>
+            <div class="inline-actions">
+              <button id="confirm-start-over" class="danger-btn">
+                Yes, start over
+              </button>
+              <button id="cancel-start-over" class="secondary-btn">
+                Cancel
+              </button>
+            </div>
+          </div>
+
+          <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Generating your draft...</p>
+          </div>
+
+          <div id="error" class="error hidden">
+            <p>Something went wrong while generating your draft.</p>
+          </div>
+
+          <div id="results-content" class="hidden">
+            <div class="results-section">
+              <div class="section-header">
+                <h3>Subject line options</h3>
+                <button id="copy-subjects" class="secondary-btn">
+                  Copy Subject Lines
+                </button>
+              </div>
+              <ul id="subject-list" class="subject-list"></ul>
+            </div>
+
+            <div class="results-section">
+              <div class="section-header">
+                <h3>Email draft</h3>
+                <button id="copy-body" class="secondary-btn">
+                  Copy Email Body
+                </button>
+              </div>
+              <div id="email-body" class="email-body"></div>
+            </div>
+
+            <div class="results-section">
+              <h3>Refinement request</h3>
+              <div class="refine">
+                <input
+                  id="refine-input"
+                  type="text"
+                  placeholder="Make it shorter, add urgency, give more subject line options..."
+                />
+                <button id="refine-btn">Send</button>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
