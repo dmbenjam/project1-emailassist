@@ -290,7 +290,7 @@ module.exports = async (req, res) => {
         "anthropic-version": "2023-06-01",
       },
       body: JSON.stringify({
-        model: "claude-3-haiku-latest",
+        model: "claude-3-haiku-20240307",
         max_tokens: 1200,
         temperature: 0.7,
         system,
