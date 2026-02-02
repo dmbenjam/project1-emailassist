@@ -136,6 +136,8 @@ Requirements:
 - Provide 2-3 subject line options with variety in style.
 - Provide an email draft body that aligns to the length target.
 - Avoid markdown in the email body; plain text only.
+- IMPORTANT: Return VALID JSON. Do not include code fences.
+- IMPORTANT: In JSON string values, do NOT include literal line breaks; use \\n for line breaks.
 
 Return JSON with:
 {
@@ -148,35 +150,93 @@ Only return JSON.`;
 const buildRefinePrompt = (request) => {
   return `Refinement request: ${request}
 
-Update the subject lines and email body. Return JSON only with:
+Update the subject lines and email body.
+- IMPORTANT: Return VALID JSON. Do not include code fences.
+- IMPORTANT: In JSON string values, do NOT include literal line breaks; use \\n for line breaks.
+
+Return JSON only with:
 {
   "subject_lines": ["...", "..."],
   "email_body": "..."
 }`;
 };
 
+const stripCodeFences = (text) =>
+  text
+    .trim()
+    .replace(/^```(?:json)?\s*/i, "")
+    .replace(/\s*```$/i, "");
+
+const escapeNewlinesInsideStrings = (text) => {
+  const s = text.replace(/\r\n/g, "\n");
+  let out = "";
+  let inStr = false;
+  let esc = false;
+
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i];
+
+    if (esc) {
+      out += c;
+      esc = false;
+      continue;
+    }
+
+    if (c === "\\") {
+      out += c;
+      if (inStr) esc = true;
+      continue;
+    }
+
+    if (c === '"') {
+      inStr = !inStr;
+      out += c;
+      continue;
+    }
+
+    if (inStr && c === "\n") {
+      out += "\\n";
+      continue;
+    }
+
+    out += c;
+  }
+
+  return out;
+};
+
 const parseResponse = (text) => {
-  const trimmed = text.trim();
+  const trimmed = stripCodeFences(text);
   try {
     return JSON.parse(trimmed);
   } catch (error) {
     const start = trimmed.indexOf("{");
     const end = trimmed.lastIndexOf("}");
-    if (start !== -1 && end !== -1 && end > start) {
-      return JSON.parse(trimmed.slice(start, end + 1));
-    }
-    throw error;
+    const sliced =
+      start !== -1 && end !== -1 && end > start
+        ? trimmed.slice(start, end + 1)
+        : trimmed;
+
+    // Most common failure mode: literal newlines inside JSON string values.
+    return JSON.parse(escapeNewlinesInsideStrings(sliced));
   }
 };
 
 const renderResults = (data) => {
+  const subjectLines = Array.isArray(data?.subject_lines)
+    ? data.subject_lines
+    : typeof data?.subject_lines === "string"
+      ? [data.subject_lines]
+      : [];
+
   subjectList.innerHTML = "";
-  data.subject_lines.forEach((line) => {
+  subjectLines.forEach((line) => {
     const li = document.createElement("li");
     li.textContent = line;
     subjectList.appendChild(li);
   });
-  emailBody.textContent = data.email_body.trim();
+  const body = (data?.email_body || "").toString().replace(/\\n/g, "\n").trim();
+  emailBody.textContent = body;
 };
 
 const callClaude = async (messages) => {
